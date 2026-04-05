@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inception Report — ZRB External Evaluation</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand:       #43A5FF;
+    --brand-dark:  #1A7FD4;
+    --brand-deep:  #0D5FA6;
+    --brand-light: #E8F4FF;
+    --brand-mid:   #B8DEFF;
+    --text:        #1a1d2e;
+    --text-muted:  #5a6478;
+    --text-light:  #8a96a8;
+    --bg:          #f6f8fb;
+    --surface:     #ffffff;
+    --border:      #dde3ec;
+    --border-lt:   #eef2f7;
+    --star:        #c97f0a;
+    --radius:      10px;
+    --radius-sm:   6px;
+    --sh:          0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+    --sh-md:       0 4px 14px rgba(0,0,0,.09),0 1px 3px rgba(0,0,0,.04);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Poppins',sans-serif;font-size:15px;line-height:1.75;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:200;height:54px;display:flex;align-items:center}
+  .nav-inner{max-width:1100px;margin:0 auto;width:100%;padding:0 1.5rem;display:flex;align-items:center;gap:0}
+  .nav-brand{font-size:12px;font-weight:700;color:var(--brand-deep);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;margin-right:1.75rem;flex-shrink:0;line-height:1.2}
+  .nav-brand span{display:block;font-size:9.5px;font-weight:500;color:var(--text-light);letter-spacing:.04em;text-transform:none;margin-top:1px}
+  .nav-links{display:flex;list-style:none;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{display:block;padding:0 13px;height:54px;line-height:54px;font-size:12px;font-weight:500;color:var(--text-muted);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a.active{color:var(--brand);border-bottom-color:var(--brand)}
+  .nav-pdf-btn{margin-left:auto;flex-shrink:0;padding:0 16px;height:32px;background:var(--brand);color:#fff;border:none;border-radius:var(--radius-sm);font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.03em;transition:background .15s;white-space:nowrap}
+  .nav-pdf-btn:hover{background:var(--brand-dark)}
+
+  /* HERO */
+  .hero{background:linear-gradient(140deg,#0b4d8a 0%,#1a7fd4 55%,#43A5FF 100%);padding:92px 1.5rem 60px;color:#fff;position:relative;overflow:hidden}
+  .hero::after{content:'';position:absolute;right:-80px;top:-80px;width:360px;height:360px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none}
+  .hero-inner{max-width:840px;margin:0 auto;position:relative}
+  .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:4px 14px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:18px}
+  .hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#7dd3fc;flex-shrink:0}
+  .hero h1{font-size:clamp(20px,3.5vw,31px);font-weight:700;line-height:1.22;margin-bottom:14px;letter-spacing:-.015em}
+  .hero-sub{font-size:14.5px;font-weight:300;opacity:.82;line-height:1.65;margin-bottom:30px;max-width:660px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:20px 32px}
+  .hero-meta-item{font-size:12.5px;opacity:.78}
+  .hero-meta-item strong{display:block;font-size:13.5px;font-weight:600;opacity:1;margin-bottom:1px}
+
+  /* LAYOUT */
+  .main{max-width:840px;margin:0 auto;padding:48px 1.5rem 80px}
+  section{margin-bottom:56px;scroll-margin-top:70px}
+  .section-label{font-size:10.5px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px}
+  h2{font-size:21px;font-weight:700;letter-spacing:-.01em;padding-bottom:12px;border-bottom:2px solid var(--brand-light);margin-bottom:22px}
+  h3{font-size:15.5px;font-weight:600;margin:28px 0 12px}
+  p{margin-bottom:14px}
+  p:last-child{margin-bottom:0}
+  ul,ol{margin:10px 0 14px 1.35rem}
+  li{margin-bottom:6px}
+  strong{font-weight:600}
+  em{font-style:italic}
+
+  /* INFO BOX */
+  .info-box{background:var(--brand-light);border-left:3px solid var(--brand);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:15px 20px;margin:20px 0;font-size:14px;color:var(--brand-deep)}
+
+  /* CALLOUT */
+  .callout{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 24px;margin:20px 0;box-shadow:var(--sh)}
+  .callout-title{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);margin-bottom:8px}
+
+  /* OUTCOME CARDS */
+  .outcome-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:20px 0}
+  .outcome-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--sh);position:relative;overflow:hidden}
+  .outcome-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--brand-deep),var(--brand))}
+  .outcome-num{font-size:10.5px;font-weight:700;color:var(--brand);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+  .outcome-card p{font-size:13.5px;line-height:1.6;margin:0}
+
+  /* ABBREV */
+  .abbrev-grid{display:grid;grid-template-columns:auto 1fr;gap:2px;background:var(--border);border-radius:var(--radius);overflow:hidden;font-size:13.5px;box-shadow:var(--sh)}
+  .abbrev-grid .ah{padding:8px 16px;background:var(--brand-light);font-weight:600;color:var(--brand-deep)}
+  .abbrev-grid .ad{padding:8px 16px;background:var(--surface);color:var(--text-muted)}
+
+  /* EQ TABLE */
+  .eq-filter-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;align-items:center}
+  .eq-filter-bar > span{font-size:11.5px;font-weight:600;color:var(--text-muted);margin-right:2px}
+  .filter-btn{padding:4px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11.5px;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif;color:var(--text-muted);transition:all .14s}
+  .filter-btn:hover{border-color:var(--brand);color:var(--brand)}
+  .filter-btn.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .eq-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:5px;overflow:hidden;transition:box-shadow .15s}
+  .eq-row:hover{box-shadow:var(--sh-md)}
+  .eq-header{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;user-select:none}
+  .eq-code{font-size:11px;font-weight:700;color:var(--brand);white-space:nowrap;min-width:40px}
+  .eq-criterion{font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0}
+  .eq-q{flex:1;font-size:13.5px;line-height:1.5}
+  .eq-star{color:var(--star);font-size:13px;flex-shrink:0}
+  .eq-chev{color:var(--text-light);font-size:11px;transition:transform .2s;flex-shrink:0}
+  .eq-row.open .eq-chev{transform:rotate(180deg)}
+  .eq-body{display:none;padding:0 14px 13px 64px;font-size:13px;color:var(--text-muted);line-height:1.6;border-top:1px solid var(--border-lt)}
+  .eq-body ul{margin:8px 0 0 1.1rem}
+  .eq-body li{margin-bottom:4px;font-size:13px}
+  .eq-row.open .eq-body{display:block;padding-top:11px}
+  .crit-rel  {background:#e6f4f1;color:#2e7d6e}
+  .crit-coh  {background:#f0ebfa;color:#6b3fa0}
+  .crit-eff  {background:#e6f2fa;color:#1a6fa0}
+  .crit-effc {background:#edf5e4;color:#3d6b22}
+  .crit-imp  {background:#fdf0ea;color:#9b3b12}
+  .crit-sus  {background:#fef5e7;color:#7a4500}
+  .crit-cc   {background:#fce8f3;color:#8a1a5a}
+  .crit-gt   {background:#eef4ee;color:#2a5c2a}
+  .crit-il   {background:#fff3e0;color:#8a4a00}
+
+  /* FLQ TABLE */
+  .flq-table{width:100%;border-collapse:collapse;font-size:13.5px;margin:16px 0}
+  .flq-table td{padding:10px 14px;border-bottom:1px solid var(--border-lt);line-height:1.55;color:var(--text-muted)}
+  .flq-table tr:last-child td{border-bottom:none}
+  .flq-table tr:hover td{background:var(--bg)}
+
+  /* WORKPLAN TABLE */
+  .wp-wrap{overflow-x:auto;margin-bottom:32px}
+  .wp-table{width:100%;border-collapse:collapse;font-size:13px}
+  .wp-table th{text-align:left;padding:9px 12px;background:var(--brand-light);color:var(--brand-deep);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid var(--brand-mid);white-space:nowrap}
+  .wp-table td{padding:9px 12px;border-bottom:1px solid var(--border-lt);vertical-align:top;line-height:1.5}
+  .wp-table tr:last-child td{border-bottom:none}
+  .wp-table tr:hover td{background:var(--bg)}
+  .wp-phase{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:10px;white-space:nowrap}
+  .ph-inc{background:#e6f2fa;color:#1a5e8a}
+  .ph-dat{background:#edf5e4;color:#2d5e1a}
+  .ph-rep{background:#fef5e7;color:#7a4500}
+  .st{font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:10px;white-space:nowrap}
+  .st-done{background:#edf5e4;color:#2d5e1a}
+  .st-plan{background:#f0ebfa;color:#5c3a90}
+  .st-pend{background:#fdf0ea;color:#9b3b12}
+  .st-this{background:var(--brand-light);color:var(--brand-deep);font-weight:700}
+  .st-req {background:#fef5e7;color:#7a4500}
+  .st-conf{background:#edf5e4;color:#1a5e2a}
+  .st-ong {background:#e6f4f1;color:#2e7d6e}
+
+  /* FIELD MISSION */
+  .fm-table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:12px}
+  .fm-table th{text-align:left;padding:10px 14px;background:var(--text);color:#fff;font-size:11px;font-weight:600;letter-spacing:.04em}
+  .fm-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+  .fm-table tr:last-child td{border-bottom:none}
+  .fm-table tr:hover td{background:var(--bg)}
+  .day-b{font-weight:700;font-size:12px;color:var(--brand-deep);display:block}
+  .day-l{font-size:11.5px;color:var(--text-muted);margin-top:2px}
+
+  /* LIMITATIONS */
+  .limit-item{background:var(--surface);border:1px solid var(--border);border-left:3px solid #e0a84a;border-radius:0 var(--radius) var(--radius) 0;padding:13px 18px;margin-bottom:9px;font-size:13.5px}
+  .limit-item strong{display:block;margin-bottom:3px;color:var(--text)}
+
+  /* DOC LISTS */
+  .doc-list{list-style:none;margin:12px 0;padding:0}
+  .doc-list li{display:flex;align-items:flex-start;gap:9px;padding:7px 10px;border-radius:var(--radius-sm);font-size:13.5px;line-height:1.5;margin-bottom:2px}
+  .doc-list li:hover{background:var(--bg)}
+  .doc-list .di{flex-shrink:0;margin-top:2px;font-size:13px}
+  .doc-list.ok .di{color:var(--brand)}
+  .doc-list.pend .di{color:#c97f0a}
+
+  /* PROGRESS */
+  .prog-row{display:flex;align-items:center;gap:14px;margin-bottom:9px}
+  .prog-lbl{font-size:12.5px;color:var(--text-muted);min-width:190px}
+  .prog-wrap{flex:1;background:var(--border);border-radius:4px;height:6px;overflow:hidden}
+  .prog-bar{height:100%;border-radius:4px;background:var(--brand);transition:width .8s ease}
+  .prog-val{font-size:12px;font-weight:600;color:var(--text-muted);min-width:30px;text-align:right}
+
+  /* NOTE BOX */
+  .note-box{background:#fffbeb;border:1px solid #f4d66e;border-radius:var(--radius);padding:13px 18px;font-size:13px;color:#7a5800;margin:14px 0}
+
+  /* FOOTER */
+  footer{background:var(--text);color:rgba(255,255,255,.55);text-align:center;padding:32px 1.5rem;font-size:12px}
+  footer strong{color:rgba(255,255,255,.88)}
+
+  /* TOC VIZ */
+  .toc-svg-wrap{margin:28px 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--sh)}
+
+  /* STRIKETHROUGH HELPER */
+  .struck{text-decoration:line-through;opacity:.55}
+
+  /* ANNEX 2 — EQ ACCORDION */
+  .a2-group{margin-bottom:28px}
+  .a2-group-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding:10px 16px;background:var(--text);border-radius:var(--radius-sm)}
+  .a2-group-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.9)}
+  .a2-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;overflow:hidden;box-shadow:var(--sh);transition:box-shadow .15s}
+  .a2-card:hover{box-shadow:var(--sh-md)}
+  .a2-card.dropped{opacity:.55;border-style:dashed}
+  .a2-trigger{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;user-select:none}
+  .a2-code{font-size:11px;font-weight:700;color:var(--brand);white-space:nowrap;min-width:38px;padding-top:1px}
+  .a2-star{font-size:13px;color:var(--star);flex-shrink:0;padding-top:1px}
+  .a2-question{flex:1;font-size:13.5px;font-weight:500;line-height:1.5;color:var(--text)}
+  .a2-card.dropped .a2-question{text-decoration:line-through}
+  .a2-chev{color:var(--text-light);font-size:11px;flex-shrink:0;transition:transform .2s;margin-top:3px}
+  .a2-card.open .a2-chev{transform:rotate(180deg)}
+  .a2-panel{display:none;border-top:1px solid var(--border-lt)}
+  .a2-card.open .a2-panel{display:block}
+  .a2-tabs{display:flex;border-bottom:1px solid var(--border-lt);background:var(--bg)}
+  .a2-tab{padding:9px 16px;font-size:11.5px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:color .14s,border-color .14s;user-select:none;white-space:nowrap}
+  .a2-tab:hover{color:var(--text)}
+  .a2-tab.active{color:var(--brand);border-bottom-color:var(--brand);background:var(--surface)}
+  .a2-pane{display:none;padding:16px 20px}
+  .a2-pane.active{display:block}
+  .a2-pane ul{margin:6px 0 0 1.1rem}
+  .a2-pane li{font-size:13px;line-height:1.6;color:var(--text-muted);margin-bottom:5px}
+  .a2-pane p{font-size:13px;color:var(--text-muted);line-height:1.6}
+  .a2-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:10px;margin-right:4px;margin-bottom:4px}
+  .tag-doc{background:#e6f2fa;color:#1a5e8a}
+  .tag-int{background:#edf5e4;color:#2d5e1a}
+  .tag-fld{background:#fef5e7;color:#7a4500}
+  .tag-rbc{background:#f0ebfa;color:#5c3a90}
+  .a2-expand-all{font-size:11.5px;font-weight:600;color:var(--brand);cursor:pointer;padding:4px 0;background:none;border:none;font-family:'Poppins',sans-serif;display:inline-flex;align-items:center;gap:4px;margin-bottom:12px}
+  .a2-expand-all:hover{color:var(--brand-dark)}
+
+  @media(max-width:640px){
+    .nav-brand span,.nav-links a{font-size:11px}
+    .nav-brand{margin-right:1rem}
+    .hero{padding:80px 1.25rem 44px}
+    .main{padding:32px 1.25rem 60px}
+    .eq-body{padding-left:14px}
+  }
+  @media print{
+    nav,.nav-pdf-btn{display:none!important}
+    .hero{padding:32px 0 24px}
+    body{background:#fff}
+    section{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-brand">Water Connect Consulting<span>External Evaluation · ZRB Phase 1</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#s-abbrev">Abbreviations</a></li>
+      <li><a href="#s-purpose">1. Purpose &amp; Scope</a></li>
+      <li><a href="#s-mandate">2. Mandate &amp; ToC</a></li>
+      <li><a href="#s-eq">3. Evaluation Questions</a></li>
+      <li><a href="#s-method">4. Methodology</a></li>
+      <li><a href="#s-workplan">5. Workplan</a></li>
+      <li><a href="#s-annexes">Annex 1 — EQ Matrix</a></li>
+    </ul>
+    <button class="nav-pdf-btn" onclick="window.print()">⬇ Save as PDF</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Inception Report &nbsp;·&nbsp; Draft</div>
+    <h1>External Evaluation of the Climate Resilient Integrated Water Resources Management in Zarafshan River Basin (ZRB) — Phase 1 (2023–2027)</h1>
+    <div class="hero-sub">Independent evaluation commissioned by the Embassy of Switzerland in Uzbekistan / Swiss Agency for Development and Cooperation (SDC)</div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><strong>Date</strong>3 April 2026</div>
+      <div class="hero-meta-item"><strong>Version</strong>Draft</div>
+      <div class="hero-meta-item"><strong>Team Leader</strong>Sabine Blumstein, Water Connect Consulting</div>
+      <div class="hero-meta-item"><strong>Local Consultant</strong>Shakhboz Akhmedov</div>
+      <div class="hero-meta-item"><strong>Client</strong>Embassy of Switzerland in Uzbekistan</div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ABBREVIATIONS -->
+<section id="s-abbrev">
+  <div class="section-label">Reference</div>
+  <h2>Abbreviations</h2>
+  <div class="abbrev-grid">
+    <div class="ah">BISA</div><div class="ad">Basin Irrigation System Administration</div>
+    <div class="ah">CACH</div><div class="ad">Caritas Switzerland</div>
+    <div class="ah">CAREC</div><div class="ad">Regional Environmental Centre for Central Asia</div>
+    <div class="ah">DAC</div><div class="ad">Development Assistance Committee (OECD)</div>
+    <div class="ah">IWRM</div><div class="ad">Integrated Water Resources Management</div>
+    <div class="ah">MinWR</div><div class="ad">Ministry of Water Resources of Uzbekistan</div>
+    <div class="ah">NWRM</div><div class="ad">National Water Resources Management Project</div>
+    <div class="ah">OECD</div><div class="ad">Organisation for Economic Co-operation and Development</div>
+    <div class="ah">ProDoc</div><div class="ad">Project Document</div>
+    <div class="ah">RBC</div><div class="ad">River Basin Council</div>
+    <div class="ah">SDC</div><div class="ad">Swiss Agency for Development and Cooperation</div>
+    <div class="ah">ToC</div><div class="ad">Theory of Change</div>
+    <div class="ah">ToR</div><div class="ad">Terms of Reference</div>
+    <div class="ah">UzHydroMet</div><div class="ad">Centre of Hydrometeorological Service of the Republic of Uzbekistan</div>
+    <div class="ah">WASIS</div><div class="ad">Water Services and Institutional Support Program</div>
+    <div class="ah">WCA</div><div class="ad">Water Consumer Association</div>
+    <div class="ah">ZRB</div><div class="ad">Zarafshan River Basin</div>
+  </div>
+</section>
+
+<!-- 1. PURPOSE -->
+<section id="s-purpose">
+  <div class="section-label">Section 1</div>
+  <h2>Evaluation Purpose and Scope</h2>
+  <p>This inception report outlines the evaluation team's proposed approach, methodology, and work plan for the external evaluation of the Climate Resilient Integrated Water Resources Management in Zarafshan River Basin (ZRB) Project Phase 1 (2023–2027), commissioned by the Embassy of Switzerland in Uzbekistan.</p>
+  <div class="callout">
+    <div class="callout-title">Dual Purpose of the Evaluation</div>
+    <p>The evaluation serves <strong>two interrelated purposes</strong>. First, it provides an independent assessment of Phase 1 <strong>performance against the six OECD/DAC criteria</strong> — Relevance, Coherence, Effectiveness, Efficiency, Impact, and Sustainability — drawing on available evidence from project documents, monitoring data, and stakeholder interviews. Second, it is explicitly <strong>forward-looking</strong>: findings and recommendations are intended to inform the design of Phase 2, including decisions on implementation arrangements, consortium composition, and strategic focus. While this evaluation will generate concrete recommendations for Phase 2, its primary output is an independent assessment and a set of design parameters and options for the next phase.</p>
+  </div>
+  <p>Per the Terms of Reference (ToR), the evaluation places primary emphasis on <strong>institutional sustainability and systemic impact</strong> — specifically, whether technical innovations and governance structures supported by the project are sufficiently embedded within national institutions to survive the project's eventual exit. Alongside this, the evaluation will assess the depth and quality of inclusive participation, examining the extent to which women, Water Consumer Associations (WCAs), and downstream users have meaningfully engaged in basin-level water governance.</p>
+  <div class="outcome-grid" style="grid-template-columns:1fr 1fr;margin-top:18px">
+    <div class="outcome-card">
+      <div class="outcome-num">Geographic Scope</div>
+      <p>Zarafshan River Basin in Uzbekistan, including pilot areas in the Samarkand and Kashkadarya regions and relevant national-level institutions in Tashkent.</p>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-num">Temporal Scope</div>
+      <p>Phase 1: June 2023 to the time of evaluation (mid-2026). Phase 1 is still underway; findings will therefore reflect an interim, mid-phase perspective.</p>
+    </div>
+  </div>
+  <p style="margin-top:16px">The evaluation is conducted by a two-person team: <strong>Sabine Blumstein</strong> (international consultant and team leader, Water Connect Consulting) and <strong>Shakhboz Akhmedov</strong> (local consultant, Tashkent). The team reports to the Head of Cooperation at the Embassy of Switzerland in Tashkent.</p>
+</section>
+
+<!-- 2. MANDATE & TOC -->
+<section id="s-mandate">
+  <div class="section-label">Section 2</div>
+  <h2>Project Mandate and Theory of Change</h2>
+  <p>The ZRB project is implemented by a consortium comprising <strong>Caritas Switzerland (CACH)</strong> as lead implementing agency, the <strong>Regional Environmental Centre for Central Asia (CAREC)</strong>, <strong>hydrosolutions GmbH</strong> as technical partner, and <strong>MeteoSwiss</strong>. The project runs from June 2023 to 2027 with SDC funding, and forms part of Switzerland's broader Water and Energy cooperation programme in Uzbekistan, which also includes the National Water Resources Management (NWRM), Uzbekistan Water Services and Institutional Support Program (WASIS), and Blue Peace Central Asia projects.</p>
+
+  <h3>Project Outcomes</h3>
+  <div class="outcome-grid">
+    <div class="outcome-card">
+      <div class="outcome-num">Outcome 1</div>
+      <p>Climate-resilient IWRM supported by improved data, digital tools, and institutional capacity — through hydrometeorological monitoring systems, the Count4D digital water accounting tool, and strengthened operational capacity of the River Basin Council (RBC) and relevant water management authorities.</p>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-num">Outcome 2</div>
+      <p>Water users — female and male — benefit from and engage in equitable, integrated water resource management, including through Special Water Service Units strengthening, regenerative agriculture uptake, and gender-balanced participation in basin governance.</p>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-num">Outcome 3</div>
+      <p>Policymakers institutionalize tools and approaches from the ZRB project, supporting climate-resilient IWRM within Uzbekistan's ongoing multi-sectoral water reforms and contributing to transboundary dialogue with Tajikistan.</p>
+    </div>
+  </div>
+
+  <h3>Theory of Change</h3>
+  <div class="info-box">
+    <em>IF</em> water users and managers are equipped with sound evidence, relevant tools, and effective institutions (Outcome 1), <em>AND IF</em> all water users are empowered to participate in and benefit from basin-wide IWRM (Outcome 2), <em>AND IF</em> national policymakers institutionalize these approaches within ongoing multi-sectoral reform processes and transboundary cooperation (Outcome 3), <em>THEN</em> climate-resilient livelihoods, food security, and environmental integrity can be strengthened — because evidence-based, inclusive, and institutionally embedded water governance is an essential pathway to sustainable development.
+  </div>
+
+  <!-- THEORY OF CHANGE DIAGRAM -->
+  <div class="toc-svg-wrap">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:18px">Theory of Change — Logic Model</div>
+
+    <!-- Row 1: three outcomes -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:0">
+
+      <!-- O1 -->
+      <div style="background:var(--brand-light);border:1px solid var(--brand-mid);border-radius:var(--radius);padding:14px 16px">
+        <div style="font-size:10px;font-weight:700;color:var(--brand-deep);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Outcome 1</div>
+        <div style="font-size:13px;font-weight:600;color:var(--brand-deep);line-height:1.35;margin-bottom:6px">Evidence, tools &amp; institutional capacity</div>
+        <div style="font-size:11.5px;color:var(--brand-dark);line-height:1.5">Hydro-met monitoring · Count4D tool · RBC operational capacity</div>
+      </div>
+
+      <!-- O2 -->
+      <div style="background:#e6f4f1;border:1px solid #9fd6c9;border-radius:var(--radius);padding:14px 16px">
+        <div style="font-size:10px;font-weight:700;color:#1a5e50;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Outcome 2</div>
+        <div style="font-size:13px;font-weight:600;color:#1a5e50;line-height:1.35;margin-bottom:6px">Equitable participation &amp; gender</div>
+        <div style="font-size:11.5px;color:#2e7d6e;line-height:1.5">WCA strengthening · regenerative agriculture · gender-balanced governance</div>
+      </div>
+
+      <!-- O3 -->
+      <div style="background:#f0ebfa;border:1px solid #c8b5f0;border-radius:var(--radius);padding:14px 16px">
+        <div style="font-size:10px;font-weight:700;color:#4a2a8a;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Outcome 3</div>
+        <div style="font-size:13px;font-weight:600;color:#4a2a8a;line-height:1.35;margin-bottom:6px">Policy institutionalization &amp; transboundary</div>
+        <div style="font-size:11.5px;color:#6b3fa0;line-height:1.5">National water reform integration · Uzbekistan–Tajikistan dialogue</div>
+      </div>
+    </div>
+
+    <!-- Arrow row -->
+    <div style="display:flex;justify-content:center;align-items:center;padding:12px 0;gap:4px">
+      <div style="width:1px;flex:1;border-top:1.5px dashed var(--border)"></div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 16px">
+        <div style="font-size:11.5px;color:var(--text-muted);font-style:italic;text-align:center;max-width:340px;line-height:1.45">If all three outcomes are achieved simultaneously and the assumptions linking outputs to outcomes hold…</div>
+        <div style="font-size:20px;color:var(--text-muted);line-height:1">↓</div>
+      </div>
+      <div style="width:1px;flex:1;border-top:1.5px dashed var(--border)"></div>
+    </div>
+
+    <!-- Impact box -->
+    <div style="background:linear-gradient(135deg,#fffbeb,#fff8d6);border:1px solid #f4d66e;border-radius:var(--radius);padding:18px 24px;text-align:center">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#8a5a00;margin-bottom:6px">Intended Impact</div>
+      <div style="font-size:15px;font-weight:600;color:#6b4200;line-height:1.35">Climate-resilient livelihoods, food security &amp; environmental integrity</div>
+      <div style="font-size:12.5px;color:#9a6000;margin-top:6px;line-height:1.5">through evidence-based, inclusive, and institutionally embedded water governance in the Zarafshan River Basin</div>
+    </div>
+  </div>
+
+  <p>The evaluation will reconstruct and assess the plausibility of this ToC in practice, including the realism of underlying assumptions connecting outputs to outcomes, and the extent to which the project's contribution pathways are visible in Phase 1 evidence.</p>
+</section>
+
+<!-- 3. EVALUATION QUESTIONS -->
+<section id="s-eq">
+  <div class="section-label">Section 3</div>
+  <h2>Evaluation Questions</h2>
+
+  <p>The evaluation covers all six OECD/DAC criteria: Relevance, Coherence, Effectiveness, Efficiency, Impact, and Sustainability. In line with the ToR, primary emphasis is placed on Sustainability and Impact, understood in institutional and systemic terms, and on governance, gender, and social inclusion across all criteria. Relevance, Coherence and Effectiveness are treated as core explanatory criteria, while Efficiency is addressed in a more focused way through an assessment of the consortium set-up and delivery model.</p>
+
+  <p>During the inception phase, the evaluation team reviewed, restructured, and refined the indicative evaluation questions provided in the ToR. The revised question set is presented in summary form in the table below; the full set including sub-questions, forward-looking questions, and the evaluation matrix is in Annex 1. The following changes were made relative to the ToR:</p>
+
+  <ul>
+    <li><strong>Structure and numbering:</strong> All questions have been renumbered sequentially as EQ-1 through EQ-16. Sub-questions are presented as unnumbered bullet points under each main EQ. Forward-looking questions are excluded from the evaluation matrix and will inform the recommendations sections of the final report.</li>
+    <li><strong>Criterion added:</strong> Coherence was added as a standalone criterion section. The coherence question (EQ-3) is therefore new.</li>
+    <li><strong>Questions merged:</strong> Several ToR questions were consolidated to reduce overlap and sharpen analytical focus. Upstream/downstream differentiation and RBC institutionalization sub-questions are folded into the relevant main EQs.</li>
+    <li><strong>New questions added:</strong> EQ-5 on adaptive management responses to implementation delays; a sub-question under EQ-6 on internal consortium coordination effectiveness — both based on topics raised at the kick-off meeting.</li>
+    <li><strong>Question dropped:</strong> The ToR includes an efficiency question on whether the project's integrated approach — combining technological innovation with institutional and governance support — demonstrates cost-effectiveness for basin-level reform. After the desk review, the evaluation team proposes to drop this as a standalone evaluation question. A robust cost-effectiveness assessment would require detailed, comparable financial data and a credible counterfactual (what a non-integrated approach would have cost), which are unlikely to be available within the scope and timing of this mid-phase review. In addition, the substantial implementation delays and institutional disruptions experienced in Phase 1 make it methodologically difficult to disentangle the inherent efficiency of the model from context-driven factors. Instead, qualitative aspects of efficiency and value-for-money — including the suitability of the consortium set-up, transaction costs, and perceived benefits of the integrated approach — will be analysed under EQ-6 using available financial information and stakeholder perspectives.</li>
+  </ul>
+
+  <h3>Forward-Looking Questions</h3>
+  <p>The following recommendation-oriented questions are excluded from the evaluation matrix as they call for synthesis and judgment rather than independent empirical investigation. They will be addressed in the conclusions and recommendations sections of the final report:</p>
+  <table class="flq-table">
+    <tr><td>What are the main practical recommendations and adjustments to strengthen the relevance of the project's climate-resilient IWRM approach for Phase 2?</td></tr>
+    <tr><td>What adjustments are needed to improve the efficiency of the project's operational and governance support mechanisms for Phase 2?</td></tr>
+    <tr><td>What are the recommendations for scaling the project's climate-resilient IWRM and digital water accounting pilots to other sub-basins or nationally?</td></tr>
+    <tr><td>What are the recommendations for ensuring the long-term financial and institutional sustainability of the RBC and the modernized monitoring network?</td></tr>
+  </table>
+
+  <h3>Main Evaluation Questions (EQ-1 to EQ-16)</h3>
+  <div class="eq-filter-bar">
+    <span>Filter by criterion:</span>
+    <button class="filter-btn active" onclick="filterEQ('all',this)">All (16)</button>
+    <button class="filter-btn" onclick="filterEQ('Relevance',this)">Relevance</button>
+    <button class="filter-btn" onclick="filterEQ('Coherence',this)">Coherence</button>
+    <button class="filter-btn" onclick="filterEQ('Effectiveness',this)">Effectiveness</button>
+    <button class="filter-btn" onclick="filterEQ('Efficiency',this)">Efficiency</button>
+    <button class="filter-btn" onclick="filterEQ('Impact',this)">Impact</button>
+    <button class="filter-btn" onclick="filterEQ('Sustainability',this)">Sustainability</button>
+    <button class="filter-btn" onclick="filterEQ('Cross-cutting',this)">Cross-cutting</button>
+    <button class="filter-btn" style="border-color:var(--star);color:var(--star)" onclick="filterEQ('primary',this)">★ Primary only</button>
+  </div>
+
+  <div id="eqList">
+
+    <!-- RELEVANCE -->
+    <div class="eq-row" data-crit="Relevance" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-1</div>
+        <div class="eq-criterion crit-rel">Relevance</div>
+        <div class="eq-q">How well does the ZRB project align with the needs and vulnerabilities of water users and rural households in the Zarafshan River Basin?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Are the project's target populations (WCAs, farmers, clusters, downstream users) the right ones, and are the most vulnerable groups adequately prioritized?</li>
+          <li>Evidence that needs of downstream, smallholder, and female water users are reflected in project design</li>
+          <li>Perceptions of relevance among beneficiaries and local stakeholders</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Relevance" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-2</div>
+        <div class="eq-criterion crit-rel">Relevance</div>
+        <div class="eq-q">To what extent does the project remain relevant in the context of Uzbekistan's evolving water sector reforms, particularly the Water Sector Development Concept 2030, the new Water Code, and the shift towards basin-level management?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Has the project's design adequately tracked and responded to the shift in government counterpart from MoWR to the Ministry of Ecology and Climate Change?</li>
+          <li>Alignment of project objectives with Water Sector Development Concept 2030 and new Water Code</li>
+          <li>Government stakeholder assessments of project relevance to ongoing reforms</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COHERENCE -->
+    <div class="eq-row" data-crit="Coherence" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-3</div>
+        <div class="eq-criterion crit-coh">Coherence <span style="font-size:10px;opacity:.7">[New]</span></div>
+        <div class="eq-q">How coherent is the ZRB project with Switzerland's broader cooperation programme in Uzbekistan and with other Swiss water interventions?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Are opportunities for synergy and coordination with NWRM, WASIS, Blue Peace Central Asia, and other donors (EU, World Bank) sufficiently identified and exploited?</li>
+          <li>Evidence of deliberate coordination mechanisms and joint activities or shared platforms</li>
+          <li>SDC and partner assessments of portfolio coherence</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EFFECTIVENESS -->
+    <div class="eq-row" data-crit="Effectiveness" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-4</div>
+        <div class="eq-criterion crit-eff">Effectiveness</div>
+        <div class="eq-q">To what extent has the ZRB project achieved — or is on track to achieve — its targets at impact, outcome, and output levels?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Which outputs and outcomes show the strongest progress, and where are the most significant gaps relative to plan?</li>
+          <li>How realistic were the original targets for institutional change (RBC) and technological adoption (hydro-met stations, digital tools), given the implementation context?</li>
+          <li>Status of RBC establishment and regularity/quality of meetings</li>
+          <li>Number and functionality of hydro-met stations installed; uptake and use of digital water accounting tools (SAP, Smartstick) by intended users</li>
+          <li>Differential results by region (Samarkand vs. Navoi/Bukhara) and by user type</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Effectiveness" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-5</div>
+        <div class="eq-criterion crit-eff">Effectiveness <span style="font-size:10px;opacity:.7">[New]</span></div>
+        <div class="eq-q">How has the project adapted to significant implementation delays and institutional disruptions, and how effective was the consortium's adaptive management response?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Were the corrective measures agreed between the Embassy and CACH implemented effectively, and have they produced tangible improvements?</li>
+          <li>Nature and timeliness of adaptive measures taken in response to delays</li>
+          <li>Embassy and implementing partner assessments of adequacy of adaptation</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- EFFICIENCY -->
+    <div class="eq-row" data-crit="Efficiency" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-6</div>
+        <div class="eq-criterion crit-effc">Efficiency</div>
+        <div class="eq-q">To what extent is the current consortium set-up (Caritas Switzerland, CAREC, hydrosolutions, MeteoSwiss) and the delivery model cost-effective and fit for purpose?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>How effective has the consortium's internal coordination been in practice, and what structural factors facilitated or hindered it? <em>[New]</em></li>
+          <li>Evidence of functioning (or dysfunctional) coordination between CACH, CAREC, hydrosolutions, MeteoSwiss</li>
+          <li>Frequency and effectiveness of Steering Committee meetings</li>
+          <li>Were steering mechanisms and monitoring systems efficient and effective for accountability and adaptive management?</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- IMPACT -->
+    <div class="eq-row" data-crit="Impact" data-primary="true" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-7</div>
+        <div class="eq-criterion crit-imp">Impact</div>
+        <div class="eq-q">To what extent has the project contributed to a systemic shift from administrative-territorial to hydro-geographic (basin) water management?</div>
+        <div class="eq-star">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Was MoWR's and UzHydroMet's involvement in and ownership of the project interventions (particularly data platforms and monitoring networks) achieved?</li>
+          <li>Legal/regulatory status of the RBC and its formal mandate</li>
+          <li>Regularity, attendance, and agenda quality of RBC meetings</li>
+          <li>Evidence of RBC-initiated decisions or recommendations acted upon by authorities</li>
+          <li>Degree to which basin-level data informs actual water allocation decisions</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Impact" data-primary="true" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-8</div>
+        <div class="eq-criterion crit-imp">Impact</div>
+        <div class="eq-q">Has the project shifted meaningful decision-making influence toward local water users? Do WCAs and farmers have a genuine voice in the RBC?</div>
+        <div class="eq-star">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Has the shift to hydro-geographic management improved water equity for downstream users (Bukhara/Navoi) relative to upstream users (Samarkand)?</li>
+          <li>Formal representation of WCAs and farmer groups in RBC structures</li>
+          <li>Evidence of WCA/farmer inputs influencing RBC agenda or decisions</li>
+          <li>Perceptions of voice and influence among WCA representatives and farmers</li>
+          <li>Reported changes in water access or allocation equity for downstream users</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Impact" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-9</div>
+        <div class="eq-criterion crit-imp">Impact</div>
+        <div class="eq-q">Are there good practices to document and share? What is the potential for scaling approaches to other sub-basins or nationally?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Evidence of replicable models from pilot sites (digital tools, RBC governance, WCA engagement)</li>
+          <li>Government and partner interest in scaling approaches</li>
+          <li>Existing channels for national dissemination or regional learning</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SUSTAINABILITY -->
+    <div class="eq-row" data-crit="Sustainability" data-primary="true" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-10</div>
+        <div class="eq-criterion crit-sus">Sustainability</div>
+        <div class="eq-q">Are the digital water accounting tools and hydrometeorological monitoring network likely to be maintained and used beyond the project's lifecycle?</div>
+        <div class="eq-star">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Will UzHydroMet and MoWR have the budget and technical capacity to maintain systems?</li>
+          <li>Is capacity building of water authorities (BISA, WCA leaders) undertaken sustainably, ensuring knowledge retention despite staff turnover?</li>
+          <li>Is BISA and its sub-units adequately staffed and resourced to adopt and use monitoring data and forecasting outputs?</li>
+          <li>Evidence of government budget lines or commitments for system maintenance</li>
+          <li>Regulatory or policy basis for continued operation of monitoring systems</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Sustainability" data-primary="true" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-11</div>
+        <div class="eq-criterion crit-sus">Sustainability</div>
+        <div class="eq-q">To what extent will the RBC be able to maintain its operations, mandate, and legitimacy as a governance platform beyond SDC support?</div>
+        <div class="eq-star">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Is the RBC's legal status and operating mandate sufficiently anchored in the regulatory framework to survive changes in political or ministerial priorities?</li>
+          <li>Legal basis for the RBC's existence and mandate (decree, regulation, or Water Code provision)</li>
+          <li>Evidence of government financial commitment to RBC operations</li>
+          <li>RBC member and government stakeholder assessments of long-term viability</li>
+          <li>Degree of ownership by non-SDC actors (ministries, BISA, WCAs)</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CROSS-CUTTING: GENDER -->
+    <div class="eq-row" data-crit="Cross-cutting" data-primary="true" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-12</div>
+        <div class="eq-criterion crit-cc">Gender &amp; Inclusion</div>
+        <div class="eq-q">Is gender meaningfully integrated at both design and implementation levels? Is women's participation in water governance and technical roles actively promoted and effective?</div>
+        <div class="eq-star">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Are there specific structural barriers — ethnic, economic, or geographic — preventing women and marginalized users from accessing digital tools or benefiting from improved water allocation?</li>
+          <li>Gender provisions in ProDoc and evidence of gender-responsive implementation</li>
+          <li>Share of women in RBC membership, WCA leadership, and project staff</li>
+          <li>Evidence of targeted measures to increase women's participation</li>
+          <li>Women's own assessments of participation quality and barriers</li>
+          <li>Evidence of marginalized groups (tail-end farmers, smallholders) accessing project benefits</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CROSS-CUTTING: TRANSBOUNDARY -->
+    <div class="eq-row" data-crit="Cross-cutting" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-13</div>
+        <div class="eq-criterion crit-gt">Transboundary</div>
+        <div class="eq-q">Does the project effectively contribute to confidence-building and technical cooperation with Tajikistan on the Zarafshan River (Outcome 3)?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>What is the current status of cooperation between the Uzbek and Tajik RBCs, and what are realistic expectations for progress by end of Phase 1?</li>
+          <li>Number and nature of joint activities or exchanges with Tajik counterparts</li>
+          <li>Evidence of data sharing or joint monitoring arrangements across the border</li>
+          <li>Stakeholder assessments of progress and obstacles in transboundary dialogue</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CROSS-CUTTING: GOVERNANCE -->
+    <div class="eq-row" data-crit="Cross-cutting" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-14</div>
+        <div class="eq-criterion crit-gt">Governance</div>
+        <div class="eq-q">Are good water governance principles (transparency, accountability, participation) promoted effectively through the River Basin Council and public data sharing?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>Evidence of public or stakeholder access to basin water data</li>
+          <li>Transparency of RBC decision-making processes (meeting records, public communications)</li>
+          <li>Accountability mechanisms within the RBC and between the RBC and water users</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- IMPLEMENTATION CHALLENGES -->
+    <div class="eq-row" data-crit="Cross-cutting" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-15</div>
+        <div class="eq-criterion crit-il">Implementation</div>
+        <div class="eq-q">What were the key implementation challenges during Phase 1, and what lessons do they hold for Phase 2 design?</div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body">
+        <ul>
+          <li>What are lessons regarding the practical application of IWRM and digitalization in Uzbekistan to guide future water sector reform?</li>
+          <li>Documentation of delays, root causes, and responses</li>
+          <li>Stakeholder assessments of what worked, what did not, and why</li>
+          <li>Evidence of lessons already incorporated into adaptive measures</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="eq-row" data-crit="Cross-cutting" data-primary="false" onclick="toggleEQ(this)">
+      <div class="eq-header">
+        <div class="eq-code">EQ-16</div>
+        <div class="eq-criterion crit-il">Implementation</div>
+        <div class="eq-q">What were the key implementation challenges during Phase 1, and what lessons do they hold for Phase 2 design? <em>(cont.)</em></div>
+        <div class="eq-star" style="visibility:hidden">★</div>
+        <div class="eq-chev">▼</div>
+      </div>
+      <div class="eq-body"><p style="font-style:italic;color:var(--text-muted)">See Annex 1 for the full evaluation matrix with indicators, methods, and sources for this question.</p></div>
+    </div>
+
+  </div><!-- /eqList -->
+  <p style="font-size:12px;color:var(--text-muted);margin-top:10px">★ Primary emphasis questions per the ToR. Click any row to expand detail. Full evaluation matrix with indicators, methods, and sources in Annex 1.</p>
+</section>
+
+<!-- 4. METHODOLOGY -->
+<section id="s-method">
+  <div class="section-label">Section 4</div>
+  <h2>Approach and Methodology</h2>
+
+  <h3>4.1 Key Principles and Methods</h3>
+  <p>The evaluation will apply a utilisation-focused, participatory, and mixed-methods design, aligned with OECD/DAC evaluation criteria:</p>
+  <ul>
+    <li><strong>Utilisation-focused and participatory:</strong> The Embassy of Switzerland, SDC, and implementing partners will be engaged at key stages to strengthen ownership, contextual grounding, and practical uptake of findings.</li>
+    <li><strong>Mixed-methods and triangulated:</strong> Evidence gathered through structured document review, semi-structured key informant interviews, direct field observation, and participation in the River Basin Council meeting. Findings will be cross-validated across data sources and methods.</li>
+    <li><strong>Institutional and systemic lens:</strong> The evaluation will assess the degree to which project-supported innovations — including digital water accounting tools, hydrometeorological systems, and the RBC — are embedded, or on a credible trajectory toward embedding, within national institutions, regulatory frameworks, and public budgetary processes.</li>
+    <li><strong>Governance, gender and inclusion focus:</strong> Beyond formal participation metrics, the evaluation will examine the quality and depth of stakeholder engagement, including the meaningful involvement of women, WCAs, and downstream users in water governance processes.</li>
+    <li><strong>Forward-looking:</strong> The evaluation will generate actionable recommendations oriented toward Phase 2 design, including on implementation arrangements, consortium structure, institutional partnerships, and thematic priorities.</li>
+    <li><strong>Do no harm:</strong> Ethical safeguards will be applied throughout. Participants will be offered the option of anonymity and informed of the evaluation's independence.</li>
+  </ul>
+  <p>The evaluation will apply a <strong>contribution analysis approach</strong> to assess the plausibility of the project's ToC. Given the mid-phase timing, full attribution of impact is neither expected nor claimed.</p>
+
+  <h3>4.2 Document Review</h3>
+  <p>A structured review of project and contextual documents constitutes the primary source of secondary evidence.</p>
+  <p><strong>Received and reviewed to date:</strong></p>
+  <ul class="doc-list ok">
+    <li><span class="di">✓</span>ZRB Project Document (ProDoc, amended March 2026)</li>
+    <li><span class="di">✓</span>Baseline Survey Report</li>
+    <li><span class="di">✓</span>ZRB Inception Phase Report</li>
+    <li><span class="di">✓</span>ZRB Half-Year and Annual Reports 2023 and 2024 (CACH/CAREC) and Management Responses</li>
+    <li><span class="di">✓</span>ZRB Interim Report 2025 HY1 (with comment responses, September 2025)</li>
+    <li><span class="di">✓</span>Documents related to other Swiss water projects (NWRM, WASIS, Blue Peace Central Asia) — project overviews</li>
+    <li><span class="di">✓</span>New Water Code of Uzbekistan (Russian)</li>
+    <li><span class="di">✓</span>Uzbekistan State Programme 2026–2028 (Russian)</li>
+  </ul>
+  <p><strong>Requested from Embassy and implementing partners (outstanding):</strong></p>
+  <ul class="doc-list pend">
+    <li><span class="di">⏳</span>ZRB logframe and indicator tracking data</li>
+    <li><span class="di">⏳</span>River Basin Council documentation (meeting minutes, membership, governance framework)</li>
+    <li><span class="di">⏳</span>Transboundary cooperation records (Uzbekistan–Tajikistan)</li>
+    <li><span class="di">⏳</span>SDC Country Programme for Central Asia 2026–2029</li>
+    <li><span class="di">⏳</span>Publications and assessments produced under the ZRB project</li>
+  </ul>
+
+  <h3>4.3 Interviews</h3>
+  <p>Semi-structured key informant interviews are the primary source of qualitative primary data. Interviews are organised in two phases:</p>
+  <ul>
+    <li><strong>Online pre-mission interviews (April–early May 2026):</strong> Targeting stakeholders accessible remotely, including some staff from Caritas Switzerland headquarters, Embassy of Switzerland members, Swiss technical solution providers (hydrosolutions GmbH, MeteoSwiss), and selected previous project team leaders.</li>
+    <li><strong>In-country interviews and field mission (week of 18 May 2026):</strong> Anchored to the River Basin Council meeting (20/21 May 2026), with bilateral interviews and group discussions in Tashkent and in the ZRB pilot regions (Samarkand and Kashkadarya). The detailed in-country schedule is being finalised by the local consultant.</li>
+  </ul>
+  <p>Interview targets include: Embassy of Switzerland in Tashkent; Caritas Switzerland (CACH) headquarters and in-country team; CAREC programme and technical staff; hydrosolutions GmbH and MeteoSwiss; Ministry of Water Resources; National Committee on Ecology and Climate Change; Ministry of Agriculture; Ministry of Geology and Mining; UzHydroMet; RBC members and secretariat; BISA staff; WCA representatives (including female members and leaders); farmers and beneficiaries in pilot areas (upstream and downstream); representatives of other Swiss water interventions; and other development partners (EU, World Bank, as relevant).</p>
+  <p>Interviews will be conducted in English, Uzbek, and possibly Russian as appropriate. Shakhboz Akhmedov will provide interpretation and translation support. All interviews will be documented through detailed notes; audio recording only with explicit participant consent. A structured stakeholder list (50+ entries) has been prepared and shared with implementing partners for contact detail population.</p>
+
+  <h3>4.4 Synthesis and Reporting</h3>
+  <p>Findings will be synthesised around each OECD/DAC criterion and main evaluation question following a <strong>finding → evidence → conclusion → recommendation</strong> logic. Triangulation will be applied systematically. Where evidence is limited or conflicting, this will be explicitly flagged, and the evaluation will distinguish between findings directly supported by reviewed materials, logical inferences, and gaps where evidence is insufficient.</p>
+  <p>The draft evaluation report (target: 12 June 2026) will be shared with the Embassy for review and comment. A debriefing session will be held at the Embassy of Switzerland in Tashkent at the close of the field mission. The final report (due 30 June 2026) will incorporate Embassy feedback and include the completed SDC Assessment Grid for the DAC Criteria as an annex.</p>
+
+  <h3>4.5 Evaluation Team</h3>
+  <div class="outcome-grid" style="grid-template-columns:1fr 1fr">
+    <div class="outcome-card">
+      <div class="outcome-num">International Consultant / Team Leader</div>
+      <p><strong>Sabine Blumstein</strong>, Water Connect Consulting. Leads evaluation design, manages client relations, conducts interviews, and is responsible for all report drafting, editing, and quality assurance.</p>
+    </div>
+    <div class="outcome-card">
+      <div class="outcome-num">Local Consultant</div>
+      <p><strong>Shakhboz Akhmedov</strong>, Tashkent. Leads field logistics, stakeholder coordination, interpretation and translation, and provides contextual analysis of the Uzbek water sector and institutional landscape.</p>
+    </div>
+  </div>
+
+  <h3>4.6 Limitations</h3>
+  <div class="limit-item"><strong>Mid-phase timing</strong>The evaluation is conducted before Phase 1 is complete. Impact-level results cannot be fully assessed at this stage; the evaluation will focus on output and outcome-level evidence and assess the trajectory toward longer-term results.</div>
+  <div class="limit-item"><strong>Attribution</strong>The ZRB project operates in a complex multi-actor environment involving multiple ministries, donors, and international organisations. Attributing changes in water governance solely to the project is not feasible; contribution analysis will be applied.</div>
+  <div class="limit-item"><strong>Document gaps</strong>Several key documents — including the logframe with indicator tracking data and RBC governance records — are outstanding at the time of drafting. Where these remain unavailable at the time of the field mission, findings in affected areas will be flagged as provisional.</div>
+  <div class="limit-item"><strong>Access and sensitivity</strong>Some interview topics — particularly questions regarding the authenticity of project activities and consortium dynamics — may be politically or reputationally sensitive. The evaluation team will manage these with high discretion and rely on triangulation across multiple sources.</div>
+  <div class="limit-item"><strong>Language and translation</strong>Most field interviews will require interpretation. Interview notes will flag where interpretation constraints may have affected evidence quality.</div>
+</section>
+
+<!-- 5. WORKPLAN -->
+<section id="s-workplan">
+  <div class="section-label">Section 5</div>
+  <h2>Workplan and Timeline</h2>
+  <p>The evaluation is organised in three phases: (1) Inception, covering desk review and evaluation design; (2) Data Collection, covering online pre-mission interviews and the in-country field mission; and (3) Reporting, covering data synthesis, draft report preparation, and finalisation.</p>
+
+  <div style="margin:20px 0 28px">
+    <div class="prog-row"><div class="prog-lbl">Phase 1 — Inception</div><div class="prog-wrap"><div class="prog-bar" style="width:85%"></div></div><div class="prog-val">85%</div></div>
+    <div class="prog-row"><div class="prog-lbl">Phase 2 — Data Collection</div><div class="prog-wrap"><div class="prog-bar" style="width:5%;opacity:.7"></div></div><div class="prog-val">5%</div></div>
+    <div class="prog-row"><div class="prog-lbl">Phase 3 — Reporting</div><div class="prog-wrap"><div class="prog-bar" style="width:0%"></div></div><div class="prog-val">—</div></div>
+  </div>
+
+  <div class="wp-wrap">
+    <table class="wp-table">
+      <thead>
+        <tr>
+          <th style="min-width:90px">Phase</th>
+          <th style="min-width:200px">Activity</th>
+          <th style="min-width:115px">Timing</th>
+          <th style="min-width:80px">Status</th>
+          <th style="min-width:130px">Responsibility</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="wp-phase ph-inc">Inception</span></td><td>Kick-off meeting with Embassy</td><td>25 March 2026</td><td><span class="st st-done">Completed</span></td><td>Eval. team, Embassy</td></tr>
+        <tr><td></td><td>Desk review of available project documents</td><td>March–April 2026</td><td><span class="st st-ong">Ongoing</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Preparation of evaluation questions and matrix</td><td>March–April 2026</td><td><span class="st st-done">Completed</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Stakeholder list; outreach to implementing partners</td><td>March–April 2026</td><td><span class="st st-ong">Ongoing</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td><strong>Draft Inception Report</strong></td><td>3 April 2026</td><td><span class="st st-this">This document</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Embassy feedback on Inception Report</td><td>10 April 2026</td><td><span class="st st-pend">Pending</span></td><td>Embassy</td></tr>
+        <tr><td></td><td>Final Inception Report</td><td>13 April 2026</td><td><span class="st st-pend">Pending</span></td><td>Evaluation team</td></tr>
+        <tr><td><span class="wp-phase ph-dat">Data Collection</span></td><td>Online pre-mission interviews (Caritas, Embassy, technical partners)</td><td>April–early May 2026</td><td><span class="st st-plan">Planned</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Receipt of outstanding project documents</td><td>April–May 2026</td><td><span class="st st-req">Requested</span></td><td>Embassy / IPs</td></tr>
+        <tr><td></td><td>Field mission — Tashkent and ZRB regions</td><td>Week of 18 May 2026</td><td><span class="st st-plan">Planned</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Observer participation: River Basin Council meeting</td><td>20/21 May 2026</td><td><span class="st st-conf">Confirmed</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>In-country bilateral interviews and field visits</td><td>18–23 May 2026</td><td><span class="st st-plan">Planned [TBC]</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Debriefing at Embassy, Tashkent</td><td>22 May 2026 (tbc)</td><td><span class="st st-plan">Planned</span></td><td>Eval. team, Embassy</td></tr>
+        <tr><td><span class="wp-phase ph-rep">Reporting</span></td><td>Data analysis and synthesis</td><td>Late May–June 2026</td><td><span class="st st-plan">Planned</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Draft Evaluation Report</td><td>12 June 2026</td><td><span class="st st-plan">Planned</span></td><td>Evaluation team</td></tr>
+        <tr><td></td><td>Embassy feedback on Draft Report</td><td>19 June 2026</td><td><span class="st st-plan">Planned</span></td><td>Embassy</td></tr>
+        <tr><td></td><td>Final Evaluation Report (incl. SDC DAC Assessment Grid)</td><td>30 June 2026</td><td><span class="st st-plan">Planned</span></td><td>Evaluation team</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>5.2 Detailed Field Mission Plan — Week of 18 May 2026</h3>
+  <p>The in-country mission will take place in the week of 18 May 2026 and is structured around three objectives: (i) observing the functioning of the Zarafshan River Basin Council and related governance processes; (ii) triangulating project results and institutional changes through interviews with national stakeholders in Tashkent; and (iii) validating field-level changes, including digital tools and agricultural practices, with water users and local authorities in the Zarafshan River Basin. The precise schedule and other mission details will be adjusted as needed based on stakeholder availability and logistical considerations.</p>
+
+  <div style="display:flex;flex-direction:column;gap:12px;margin:20px 0">
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)">
+      <div style="background:var(--brand-deep);color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">1</div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700">Day 1 — Monday, 18 May 2026</div>
+          <div style="font-size:11.5px;opacity:.8">Arrival and Tashkent consultations</div>
+        </div>
+      </div>
+      <ul style="padding:14px 18px 14px 36px;margin:0;font-size:13.5px;line-height:1.65">
+        <li>Arrival of the international consultant in Tashkent; internal briefing with the local consultant.</li>
+        <li>Courtesy meeting and briefing with the Embassy of Switzerland (Head of Cooperation, Portfolio Manager, NPO).</li>
+        <li>Meetings with Caritas Switzerland and CAREC project management teams (project strategy, implementation progress, major challenges, expectations for Phase 2).</li>
+        <li>Evening team debrief to refine key lines of inquiry for subsequent days.</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)">
+      <div style="background:#1A7FD4;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">2</div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700">Day 2 — Tuesday, 19 May 2026</div>
+          <div style="font-size:11.5px;opacity:.8">National-level institutions and RBC preparation</div>
+        </div>
+      </div>
+      <ul style="padding:14px 18px 14px 36px;margin:0;font-size:13.5px;line-height:1.65">
+        <li>Meetings with Ministry of Water Resources (MinWR) and relevant departments (basin management, data and planning) on institutional reforms, RBC mandate, and adoption of project innovations.</li>
+        <li>Meeting with UzHydroMet on hydrometeorological monitoring network, data integration, and sustainability of equipment and platforms.</li>
+        <li>Meeting with Ministry of Ecology and Climate Change / National Committee on Ecology and Climate Change and, if feasible, Ministry of Agriculture and Ministry of Geology and Mining on policy coherence and cross-sectoral integration.</li>
+        <li>Short preparatory exchange with the RBC secretariat and implementing partners regarding the upcoming council meeting (agenda, composition, key decisions to be taken).</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)">
+      <div style="background:#2e7d6e;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">3</div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700">Day 3 — Wednesday, 20 May 2026</div>
+          <div style="font-size:11.5px;opacity:.8">RBC meeting observation — Kashkadarya region</div>
+        </div>
+      </div>
+      <ul style="padding:14px 18px 14px 36px;margin:0;font-size:13.5px;line-height:1.65">
+        <li>Travel to Kashkadarya region (pilot area).</li>
+        <li>Participation as observers in the Zarafshan River Basin Council meeting.</li>
+        <li>During breaks and immediately after the session, short semi-structured conversations with a cross-section of RBC members (upstream/downstream, women and men, different stakeholder categories) on their roles, perceived influence, and views on the project.</li>
+        <li>Debrief between evaluators to document key observations on governance, participation, decision-making dynamics, and data use in the RBC.</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)">
+      <div style="background:#3d6b22;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">4</div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700">Day 4 — Thursday, 21 May 2026</div>
+          <div style="font-size:11.5px;opacity:.8">Samarkand region field visits</div>
+        </div>
+      </div>
+      <ul style="padding:14px 18px 14px 36px;margin:0;font-size:13.5px;line-height:1.65">
+        <li>Travel to Samarkand region (pilot area).</li>
+        <li>Site visits to project-supported hydro-met stations, Count4D / digital water accounting applications, and Special Water Service Units (as applicable) with local MinWR/BISA staff.</li>
+        <li>Group discussions and/or focus groups with Water Consumer Associations and farmers (including women farmers and tail-end users) on irrigation reliability, access to information, and participation in water governance.</li>
+        <li>Short meeting with local authorities (e.g. hokimiyat or sectoral departments) on the perceived benefits and challenges of the ZRB project.</li>
+      </ul>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh)">
+      <div style="background:#6b3fa0;color:#fff;padding:12px 18px;display:flex;align-items:center;gap:12px">
+        <div style="background:rgba(255,255,255,.18);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">5</div>
+        <div>
+          <div style="font-size:12.5px;font-weight:700">Day 5 — Friday, 22 May 2026</div>
+          <div style="font-size:11.5px;opacity:.8">Concluding meetings and Embassy debriefing</div>
+        </div>
+      </div>
+      <ul style="padding:14px 18px 14px 36px;margin:0;font-size:13.5px;line-height:1.65">
+        <li>Return travel to Tashkent in the evening.</li>
+        <li>Internal synthesis meeting between the international and local consultants to consolidate field notes, identify emerging patterns per evaluation question, and note evidence gaps.</li>
+        <li>Debriefing meeting at the Embassy of Switzerland to present preliminary findings, test emerging conclusions, and discuss implications for Phase 2 design.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <p>Throughout the mission, interviews and group discussions will be conducted in English, Uzbek, and Russian as appropriate, with the local consultant providing interpretation. A minimum of: (i) two group discussions in each pilot region (one mixed, one prioritising women and vulnerable users where feasible), and (ii) interviews with at least 3–4 RBC members from different stakeholder categories are envisaged to ensure upstream/downstream and gender representation. The detailed daily schedule, including named institutions and participants, will be finalised by the local consultant in coordination with the Embassy and implementing partners and shared in advance of the mission.</p>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:4px"><em>Schedule subject to change based on stakeholder availability and logistical considerations.</em></p>
+</section>
+
+<!-- ANNEXES -->
+<section id="s-annexes">
+  <div class="section-label">Annexes</div>
+  <h2>Annexes</h2>
+
+  <!-- ANNEX 2 -->
+  <div id="s-annex1">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:6px">
+      <div>
+        <div class="section-label">Annex 1</div>
+        <h2 style="border-bottom:none;padding-bottom:0;margin-bottom:0">Revised Evaluation Questions — Full Matrix</h2>
+      </div>
+      <button class="a2-expand-all" id="expandAllBtn" onclick="toggleAllA2()">▼ Expand all</button>
+    </div>
+    <p style="font-size:13.5px;color:var(--text-muted);margin-bottom:20px">Each card below contains the full evaluation question, sub-questions, indicators/what we look for, methods, and sources. Click any card to expand, or use "Expand all". ★ = primary emphasis question per ToR.</p>
+
+    <!-- RELEVANCE -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#9fd6c9">Relevance</div>
+      </div>
+
+      <!-- EQ1 -->
+      <div class="a2-card" id="a2-eq1">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq1', 0)">
+          <div class="a2-code">EQ-1</div>
+          <div class="a2-question">How well does the ZRB project align with the needs and vulnerabilities of water users and rural households in the Zarafshan River Basin?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq1-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq1-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq1-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq1-src')">Sources</div>
+          </div>
+          <div id="a2-eq1-sub" class="a2-pane active"><ul>
+            <li>Are the project's target populations (WCAs, farmers, clusters, downstream users) the right ones, and are the most vulnerable groups adequately prioritized?</li>
+          </ul></div>
+          <div id="a2-eq1-ind" class="a2-pane"><ul>
+            <li>Degree of match between project objectives and documented needs/vulnerabilities of target groups</li>
+            <li>Evidence that needs of downstream, smallholder, and female water users are reflected in project design</li>
+            <li>Perceptions of relevance among beneficiaries and local stakeholders</li>
+          </ul></div>
+          <div id="a2-eq1-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-fld">Field visits</span></p></div>
+          <div id="a2-eq1-src" class="a2-pane"><ul>
+            <li>ProDoc; baseline survey / needs assessments</li>
+            <li>Interviews: WCAs, farmers, cluster representatives</li>
+            <li>Interviews: CACH, CAREC field staff</li>
+            <li>Field visits: pilot sites (Samarkand, Navoi/Bukhara)</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <!-- EQ2 -->
+      <div class="a2-card" id="a2-eq2">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq2', 0)">
+          <div class="a2-code">EQ-2</div>
+          <div class="a2-question">To what extent does the project remain relevant in the context of Uzbekistan's evolving water sector reforms, particularly the Water Sector Development Concept 2030, the new Water Code, and the shift towards basin-level management?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq2-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq2-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq2-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq2-src')">Sources</div>
+          </div>
+          <div id="a2-eq2-sub" class="a2-pane active"><ul>
+            <li>Has the project's design adequately tracked and responded to the shift in government counterpart from MoWR to the Ministry of Ecology and Climate Change?</li>
+          </ul></div>
+          <div id="a2-eq2-ind" class="a2-pane"><ul>
+            <li>Alignment of project objectives with Water Sector Development Concept 2030 and new Water Code</li>
+            <li>Evidence of project adaptation following ministerial changes</li>
+            <li>Government stakeholder assessments of project relevance to ongoing reforms</li>
+          </ul></div>
+          <div id="a2-eq2-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq2-src" class="a2-pane"><ul>
+            <li>Water Sector Development Concept 2030; new Water Code</li>
+            <li>ProDoc; Annual Plans of Operation</li>
+            <li>Interviews: Ministry of Ecology and Climate Change, MoWR, Ministry of Agriculture</li>
+            <li>Interviews: SDC Embassy</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /relevance -->
+
+    <!-- COHERENCE -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#c8b5f0">Coherence</div>
+      </div>
+      <!-- EQ3 -->
+      <div class="a2-card" id="a2-eq3">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq3', 0)">
+          <div class="a2-code">EQ-3</div>
+          <div class="a2-question">How coherent is the ZRB project with Switzerland's broader cooperation programme in Uzbekistan and with other Swiss water interventions? <span style="font-size:11px;color:var(--brand);font-weight:600">[New]</span></div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq3-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq3-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq3-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq3-src')">Sources</div>
+          </div>
+          <div id="a2-eq3-sub" class="a2-pane active"><ul>
+            <li>Are opportunities for synergy and coordination with NWRM, WASIS, Blue Peace Central Asia, and other donors (EU, World Bank) sufficiently identified and exploited?</li>
+          </ul></div>
+          <div id="a2-eq3-ind" class="a2-pane"><ul>
+            <li>Evidence of deliberate coordination mechanisms with NWRM, WASIS, Blue Peace Central Asia</li>
+            <li>Examples of joint activities, shared platforms, or cross-referencing with other donor programmes</li>
+            <li>SDC and partner assessments of portfolio coherence</li>
+          </ul></div>
+          <div id="a2-eq3-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq3-src" class="a2-pane"><ul>
+            <li>SDC Country Programme; ProDoc; Water Concept 2030, State Program 2025–2029 (pending)</li>
+            <li>Interviews: SDC Embassy; team leaders of NWRM, WASIS, Blue Peace Central Asia</li>
+            <li>Interviews: EU, World Bank representatives (if accessible)</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /coherence -->
+
+    <!-- EFFECTIVENESS -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#85B7EB">Effectiveness</div>
+      </div>
+      <!-- EQ4 -->
+      <div class="a2-card" id="a2-eq4">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq4', 0)">
+          <div class="a2-code">EQ-4</div>
+          <div class="a2-question">To what extent has the ZRB project achieved — or is on track to achieve — its targets at impact, outcome, and output levels?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq4-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq4-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq4-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq4-src')">Sources</div>
+          </div>
+          <div id="a2-eq4-sub" class="a2-pane active"><ul>
+            <li>Which outputs and outcomes show the strongest progress, and where are the most significant gaps relative to plan?</li>
+            <li>How realistic were the original targets for institutional change (RBC) and technological adoption (hydro-met stations, digital tools), given the implementation context?</li>
+            <li>Is results achievement differentiated by geography (upstream vs. downstream) or by type of water user? If so, what explains the differences?</li>
+            <li>What are the latest developments in the basin's water management system (data-driven decision-making, transparent allocation, staff capacities), and to what extent can these be attributed to the project?</li>
+          </ul></div>
+          <div id="a2-eq4-ind" class="a2-pane"><ul>
+            <li>Progress against logframe targets at output and outcome level and progress over project so far</li>
+            <li>Status of RBC establishment and regularity/quality of meetings</li>
+            <li>Number and functionality of hydro-met stations installed</li>
+            <li>Uptake and use of digital water accounting tools (SAP, Smartstick) by intended users</li>
+            <li>Differential results by region (Samarkand vs. Navoi/Bukhara) and by user type</li>
+          </ul></div>
+          <div id="a2-eq4-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-fld">Field observation</span><span class="a2-tag tag-rbc">RBC observation</span></p></div>
+          <div id="a2-eq4-src" class="a2-pane"><ul>
+            <li>Logframe and indicator tracking data (pending)</li>
+            <li>Annual/progress reports (latest pending)</li>
+            <li>Interviews: CACH, CAREC, hydrosolutions, MeteoSwiss</li>
+            <li>Interviews: MoWR, UzHydroMet, BISA/ISA officials</li>
+            <li>Interviews: RBC members</li>
+            <li>Field visits: hydro-met stations, pilot sites</li>
+            <li>RBC meeting observation</li>
+          </ul></div>
+        </div>
+      </div>
+      <!-- EQ5 -->
+      <div class="a2-card" id="a2-eq5">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq5', 0)">
+          <div class="a2-code">EQ-5</div>
+          <div class="a2-question">How has the project adapted to significant implementation delays and institutional disruptions, and how effective was the consortium's adaptive management response? <span style="font-size:11px;color:var(--brand);font-weight:600">[New]</span></div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq5-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq5-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq5-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq5-src')">Sources</div>
+          </div>
+          <div id="a2-eq5-sub" class="a2-pane active"><ul>
+            <li>Were the corrective measures agreed between the Embassy and CACH implemented effectively, and have they produced tangible improvements?</li>
+          </ul></div>
+          <div id="a2-eq5-ind" class="a2-pane"><ul>
+            <li>Nature and timeliness of adaptive measures taken in response to delays</li>
+            <li>Evidence of improved performance following corrective measures (e.g., increased Tashkent staff allocation)</li>
+            <li>Embassy and implementing partner assessments of adequacy of adaptation</li>
+          </ul></div>
+          <div id="a2-eq5-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq5-src" class="a2-pane"><ul>
+            <li>Annual Plans of Operation; progress/annual reports (some pending)</li>
+            <li>Interviews: SDC Embassy; CACH and CAREC management</li>
+            <li>Interviews: previous ZRB team leaders</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /effectiveness -->
+
+    <!-- EFFICIENCY -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#C0DD97">Efficiency</div>
+      </div>
+      <!-- EQ6 -->
+      <div class="a2-card" id="a2-eq6">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq6', 0)">
+          <div class="a2-code">EQ-6</div>
+          <div class="a2-question">To what extent is the current consortium set-up (Caritas Switzerland, CAREC, hydrosolutions, MeteoSwiss) and the delivery model (working through MoWR and BISA structures) cost-effective and fit for purpose?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq6-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq6-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq6-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq6-src')">Sources</div>
+          </div>
+          <div id="a2-eq6-sub" class="a2-pane active"><ul>
+            <li>How effective has the consortium's internal coordination been in practice, and what structural factors facilitated or hindered it? <em>[New sub-question]</em></li>
+            <li>Were steering mechanisms (Steering Committee, multi-ministry setup) and monitoring systems efficient and effective for accountability and adaptive management?</li>
+          </ul></div>
+          <div id="a2-eq6-ind" class="a2-pane"><ul>
+            <li>Evidence of functioning (or dysfunctional) coordination between CACH, CAREC, hydrosolutions, MeteoSwiss</li>
+            <li>Frequency and effectiveness of Steering Committee meetings</li>
+            <li>Evidence of timely decision-making and problem resolution</li>
+            <li>Transaction costs associated with multi-ministry Steering Committee</li>
+          </ul></div>
+          <div id="a2-eq6-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq6-src" class="a2-pane"><ul>
+            <li>Steering Committee minutes (if available, pending); Annual Plans of Operation</li>
+            <li>Interviews: CACH, CAREC, hydrosolutions, MeteoSwiss</li>
+            <li>Interviews: SDC Embassy</li>
+            <li>Interviews: Ministry representatives on Steering Committee</li>
+          </ul></div>
+        </div>
+      </div>
+      <!-- EQ7 dropped -->
+      <div class="a2-card dropped" id="a2-eq7">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq7', 0)">
+          <div class="a2-code" style="color:var(--text-light)">EQ-7</div>
+          <div class="a2-question">Does the project's integrated approach — combining technological innovation with institutional and governance support — demonstrate cost-effectiveness for basin-level reform?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div style="padding:14px 20px;font-size:13px;color:var(--text-muted);background:#fef9f0;border-top:1px solid #f4d66e">
+            <strong style="color:#7a5800">Proposed for removal.</strong> Assessing cost-effectiveness in this sense would require detailed financial data and a credible counterfactual — what a non-integrated approach would have cost — unlikely to be available or verifiable within this evaluation's scope. Given the significant implementation delays during Phase 1, disentangling efficiency gains or losses attributable to the model itself from those caused by the disruptions of the first phase would also be methodologically very difficult. The evaluation team recommends focusing the efficiency criterion on EQ-6, which addresses the consortium setup and delivery model in terms that are more tractable with available evidence.
+          </div>
+        </div>
+      </div>
+    </div><!-- /efficiency -->
+
+    <!-- IMPACT -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#F0997B">Impact</div>
+      </div>
+      <!-- EQ8 -->
+      <div class="a2-card" id="a2-eq8">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq8', 0)">
+          <div class="a2-code">EQ-8</div>
+          <div class="a2-question">To what extent has the project contributed to a systemic shift from administrative-territorial to hydro-geographic (basin) water management?</div>
+          <div class="a2-star">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq8-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq8-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq8-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq8-src')">Sources</div>
+          </div>
+          <div id="a2-eq8-sub" class="a2-pane active"><ul>
+            <li>Was MoWR's and UzHydroMet's involvement in and ownership of the project interventions (particularly data platforms and monitoring networks) achieved?</li>
+            <li>What is the current status of the RBC as a functioning governance platform, and to what extent can its establishment and operation be attributed to the project?</li>
+            <li>To what extent has the RBC demonstrated genuine decision-making value — beyond convening — and earned legitimacy with its members and the broader sector?</li>
+          </ul></div>
+          <div id="a2-eq8-ind" class="a2-pane"><ul>
+            <li>Legal/regulatory status of the RBC and its formal mandate</li>
+            <li>Regularity, attendance, and agenda quality of RBC meetings</li>
+            <li>Evidence of RBC-initiated decisions or recommendations acted upon by authorities</li>
+            <li>Stakeholder perceptions of RBC legitimacy and decision-making influence</li>
+            <li>Degree to which basin-level data informs actual water allocation decisions</li>
+          </ul></div>
+          <div id="a2-eq8-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-rbc">RBC meeting observation</span></p></div>
+          <div id="a2-eq8-src" class="a2-pane"><ul>
+            <li>RBC documentation (meeting minutes, mandate documents — pending)</li>
+            <li>ProDoc; annual/progress reports (some pending)</li>
+            <li>Interviews: RBC members (government, WCAs, basin management bodies)</li>
+            <li>Interviews: MoWR, Ministry of Ecology and Climate Change, BISA</li>
+            <li>RBC meeting observation (field mission, May 2026)</li>
+          </ul></div>
+        </div>
+      </div>
+      <!-- EQ9 -->
+      <div class="a2-card" id="a2-eq9">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq9', 0)">
+          <div class="a2-code">EQ-9</div>
+          <div class="a2-question">Has the project shifted meaningful decision-making influence toward local water users? Do WCAs and farmers have a genuine voice in the RBC?</div>
+          <div class="a2-star">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq9-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq9-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq9-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq9-src')">Sources</div>
+          </div>
+          <div id="a2-eq9-sub" class="a2-pane active"><ul>
+            <li>Has the shift to hydro-geographic management improved water equity for downstream users (Bukhara/Navoi) relative to upstream users (Samarkand)?</li>
+          </ul></div>
+          <div id="a2-eq9-ind" class="a2-pane"><ul>
+            <li>Formal representation of WCAs and farmer groups in RBC structures</li>
+            <li>Evidence of WCA/farmer inputs influencing RBC agenda or decisions</li>
+            <li>Perceptions of voice and influence among WCA representatives and farmers</li>
+            <li>Reported changes in water access or allocation equity for downstream users</li>
+          </ul></div>
+          <div id="a2-eq9-meth" class="a2-pane"><p><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-fld">Field observation</span></p></div>
+          <div id="a2-eq9-src" class="a2-pane"><ul>
+            <li>Interviews: WCA representatives, farmer groups (upstream and downstream)</li>
+            <li>Interviews: RBC members (non-government)</li>
+            <li>Interviews: CACH, CAREC field staff</li>
+            <li>Field visits: downstream pilot areas (Navoi/Bukhara)</li>
+          </ul></div>
+        </div>
+      </div>
+      <!-- EQ10 -->
+      <div class="a2-card" id="a2-eq10">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq10', 0)">
+          <div class="a2-code">EQ-10</div>
+          <div class="a2-question">Are there good practices to document and share? What is the potential for scaling approaches to other sub-basins or nationally?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq10-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq10-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq10-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq10-src')">Sources</div>
+          </div>
+          <div id="a2-eq10-sub" class="a2-pane active"><p style="color:var(--text-muted);font-style:italic">No standalone sub-questions; analytical dimensions addressed through indicators below.</p></div>
+          <div id="a2-eq10-ind" class="a2-pane"><ul>
+            <li>Evidence of replicable models from pilot sites (digital tools, RBC governance, WCA engagement)</li>
+            <li>Government and partner interest in scaling approaches</li>
+            <li>Existing channels for national dissemination or regional learning</li>
+          </ul></div>
+          <div id="a2-eq10-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq10-src" class="a2-pane"><ul>
+            <li>ProDoc; annual/progress reports (pending)</li>
+            <li>Interviews: MoWR, Ministry of Ecology; SDC Embassy</li>
+            <li>Interviews: CACH, CAREC, hydrosolutions</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /impact -->
+
+    <!-- SUSTAINABILITY -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#FAC775">Sustainability</div>
+      </div>
+      <!-- EQ11 -->
+      <div class="a2-card" id="a2-eq11">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq11', 0)">
+          <div class="a2-code">EQ-11</div>
+          <div class="a2-question">Are the digital water accounting tools and hydrometeorological monitoring network likely to be maintained and used beyond the project's lifecycle?</div>
+          <div class="a2-star">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq11-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq11-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq11-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq11-src')">Sources</div>
+          </div>
+          <div id="a2-eq11-sub" class="a2-pane active"><ul>
+            <li>Will UzHydroMet and MoWR have the budget and technical capacity to maintain them?</li>
+            <li>Is capacity building of water authorities (BISA, WCA leaders) undertaken sustainably, ensuring knowledge retention despite staff turnover?</li>
+            <li>Is BISA and its sub-units (ISAs) adequately staffed and resourced to adopt and use monitoring data and forecasting outputs?</li>
+          </ul></div>
+          <div id="a2-eq11-ind" class="a2-pane"><ul>
+            <li>Evidence of government budget lines or commitments for system maintenance</li>
+            <li>Capacity assessments of UzHydroMet and BISA/ISA staff to operate systems independently</li>
+            <li>Evidence of data from hydro-met stations and digital tools being used in routine operations</li>
+            <li>Regulatory or policy basis for continued operation of monitoring systems</li>
+          </ul></div>
+          <div id="a2-eq11-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-fld">Field observation</span></p></div>
+          <div id="a2-eq11-src" class="a2-pane"><ul>
+            <li>ProDoc; sustainability planning documents (if available)</li>
+            <li>Interviews: UzHydroMet, MoWR, BISA/ISA officials</li>
+            <li>Interviews: hydrosolutions, MeteoSwiss</li>
+            <li>Field visits: hydro-met stations and data platforms</li>
+          </ul></div>
+        </div>
+      </div>
+      <!-- EQ12 -->
+      <div class="a2-card" id="a2-eq12">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq12', 0)">
+          <div class="a2-code">EQ-12</div>
+          <div class="a2-question">To what extent will the RBC be able to maintain its operations, mandate, and legitimacy as a governance platform beyond SDC support?</div>
+          <div class="a2-star">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq12-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq12-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq12-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq12-src')">Sources</div>
+          </div>
+          <div id="a2-eq12-sub" class="a2-pane active"><ul>
+            <li>Is the RBC's legal status and operating mandate sufficiently anchored in the regulatory framework to survive changes in political or ministerial priorities?</li>
+          </ul></div>
+          <div id="a2-eq12-ind" class="a2-pane"><ul>
+            <li>Legal basis for the RBC's existence and mandate (decree, regulation, or Water Code provision)</li>
+            <li>Evidence of government financial commitment to RBC operations</li>
+            <li>RBC member and government stakeholder assessments of long-term viability</li>
+            <li>Degree of ownership by non-SDC actors (ministries, BISA, WCAs)</li>
+          </ul></div>
+          <div id="a2-eq12-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-rbc">RBC meeting observation</span></p></div>
+          <div id="a2-eq12-src" class="a2-pane"><ul>
+            <li>RBC mandate/regulatory documents (pending); Water Code</li>
+            <li>Interviews: Ministry of Ecology, MoWR, BISA</li>
+            <li>Interviews: RBC chair and members</li>
+            <li>Interviews: SDC Embassy</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /sustainability -->
+
+    <!-- CROSS-CUTTING: GENDER -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#F4C0D1">Cross-cutting: Gender &amp; Social Inclusion</div>
+      </div>
+      <!-- EQ13 -->
+      <div class="a2-card" id="a2-eq13">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq13', 0)">
+          <div class="a2-code">EQ-13</div>
+          <div class="a2-question">Is gender meaningfully integrated at both design and implementation levels? Is women's participation in water governance and technical roles actively promoted and effective?</div>
+          <div class="a2-star">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq13-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq13-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq13-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq13-src')">Sources</div>
+          </div>
+          <div id="a2-eq13-sub" class="a2-pane active"><ul>
+            <li>Are there specific structural barriers — ethnic, economic, or geographic — preventing women and marginalized users from accessing digital tools or benefiting from improved water allocation?</li>
+          </ul></div>
+          <div id="a2-eq13-ind" class="a2-pane"><ul>
+            <li>Gender provisions in ProDoc and evidence of gender-responsive implementation</li>
+            <li>Share of women in RBC membership, WCA leadership, and project staff</li>
+            <li>Evidence of targeted measures to increase women's participation</li>
+            <li>Women's own assessments of participation quality and barriers</li>
+            <li>Evidence of marginalized groups (tail-end farmers, smallholders) accessing project benefits</li>
+          </ul></div>
+          <div id="a2-eq13-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-fld">Focus groups</span></p></div>
+          <div id="a2-eq13-src" class="a2-pane"><ul>
+            <li>ProDoc (gender strategy); annual/progress reports (pending)</li>
+            <li>Interviews: female WCA members, women farmers</li>
+            <li>Interviews: CACH, CAREC (gender focal points if available)</li>
+            <li>Focus groups: women's groups at field sites</li>
+            <li>Interviews: local NGOs working on gender/rural livelihoods</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /gender -->
+
+    <!-- CROSS-CUTTING: TRANSBOUNDARY -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#9FE1CB">Cross-cutting: Transboundary Cooperation</div>
+      </div>
+      <!-- EQ14 -->
+      <div class="a2-card" id="a2-eq14">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq14', 0)">
+          <div class="a2-code">EQ-14</div>
+          <div class="a2-question">Does the project effectively contribute to confidence-building and technical cooperation with Tajikistan on the Zarafshan River (Outcome 3)?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq14-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq14-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq14-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq14-src')">Sources</div>
+          </div>
+          <div id="a2-eq14-sub" class="a2-pane active"><ul>
+            <li>What is the current status of cooperation between the Uzbek and Tajik RBCs, and what are realistic expectations for progress by end of Phase 1?</li>
+          </ul></div>
+          <div id="a2-eq14-ind" class="a2-pane"><ul>
+            <li>Number and nature of joint activities or exchanges with Tajik counterparts</li>
+            <li>Evidence of data sharing or joint monitoring arrangements across the border</li>
+            <li>Stakeholder assessments of progress and obstacles in transboundary dialogue</li>
+          </ul></div>
+          <div id="a2-eq14-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq14-src" class="a2-pane"><ul>
+            <li>ProDoc (Outcome 3 section); transboundary cooperation records (pending)</li>
+            <li>Interviews: CAREC (transboundary mandate), SDC Embassy</li>
+            <li>Interviews: Tajik counterparts if accessible during field mission</li>
+            <li>Interviews: Blue Peace Central Asia team leaders</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /transboundary -->
+
+    <!-- CROSS-CUTTING: GOVERNANCE -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#C0DD97">Cross-cutting: Governance &amp; Transparency</div>
+      </div>
+      <!-- EQ15 -->
+      <div class="a2-card" id="a2-eq15">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq15', 0)">
+          <div class="a2-code">EQ-15</div>
+          <div class="a2-question">Are good water governance principles (transparency, accountability, participation) promoted effectively through the River Basin Council and public data sharing?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq15-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq15-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq15-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq15-src')">Sources</div>
+          </div>
+          <div id="a2-eq15-sub" class="a2-pane active"><p style="color:var(--text-muted);font-style:italic">No standalone sub-questions; analytical dimensions addressed through indicators below.</p></div>
+          <div id="a2-eq15-ind" class="a2-pane"><ul>
+            <li>Evidence of public or stakeholder access to basin water data</li>
+            <li>Transparency of RBC decision-making processes (meeting records, public communications)</li>
+            <li>Accountability mechanisms within the RBC and between the RBC and water users</li>
+          </ul></div>
+          <div id="a2-eq15-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span><span class="a2-tag tag-rbc">RBC meeting observation</span></p></div>
+          <div id="a2-eq15-src" class="a2-pane"><ul>
+            <li>RBC meeting records (pending); project reports</li>
+            <li>Interviews: RBC members, WCAs, MoWR, Ministry of Ecology</li>
+            <li>RBC meeting observation (May 2026)</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /governance -->
+
+    <!-- IMPLEMENTATION CHALLENGES -->
+    <div class="a2-group">
+      <div class="a2-group-header">
+        <div class="a2-group-label" style="color:#FAC775">Implementation Challenges &amp; Lessons Learned</div>
+      </div>
+      <!-- EQ16 -->
+      <div class="a2-card" id="a2-eq16">
+        <div class="a2-trigger" onclick="toggleA2('a2-eq16', 0)">
+          <div class="a2-code">EQ-16</div>
+          <div class="a2-question">What were the key implementation challenges during Phase 1, and what lessons do they hold for Phase 2 design?</div>
+          <div class="a2-star" style="visibility:hidden">★</div>
+          <div class="a2-chev">▼</div>
+        </div>
+        <div class="a2-panel">
+          <div class="a2-tabs">
+            <div class="a2-tab active" onclick="switchTab(this,'a2-eq16-sub')">Sub-questions</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq16-ind')">Indicators</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq16-meth')">Methods</div>
+            <div class="a2-tab" onclick="switchTab(this,'a2-eq16-src')">Sources</div>
+          </div>
+          <div id="a2-eq16-sub" class="a2-pane active"><ul>
+            <li>What are lessons regarding the practical application of IWRM and digitalization in Uzbekistan to guide future water sector reform?</li>
+          </ul></div>
+          <div id="a2-eq16-ind" class="a2-pane"><ul>
+            <li>Documentation of delays, root causes, and responses</li>
+            <li>Stakeholder assessments of what worked, what did not, and why</li>
+            <li>Evidence of lessons already incorporated into adaptive measures</li>
+          </ul></div>
+          <div id="a2-eq16-meth" class="a2-pane"><p><span class="a2-tag tag-doc">Document review</span><span class="a2-tag tag-int">Interviews</span></p></div>
+          <div id="a2-eq16-src" class="a2-pane"><ul>
+            <li>Annual Plans of Operation; progress/annual reports (pending)</li>
+            <li>Interviews: CACH, CAREC, hydrosolutions, MeteoSwiss</li>
+            <li>Interviews: SDC Embassy; previous ZRB team leaders</li>
+            <li>Interviews: government counterparts (Ministry of Ecology, MoWR)</li>
+          </ul></div>
+        </div>
+      </div>
+    </div><!-- /implementation -->
+
+    <p style="font-size:12px;color:var(--text-muted);margin-top:8px">★ Primary emphasis questions (institutional sustainability, systemic impact, gender/inclusion) per ToR. [New] = question added based on kick-off meeting discussions. Struck-through EQ-7 is proposed for removal — see rationale in Section 3.</p>
+  </div><!-- /annex1 -->
+</section>
+
+</div><!-- /main -->
+
+<footer>
+  <strong>Water Connect Consulting</strong> &nbsp;·&nbsp; Sabine Blumstein, Team Leader<br>
+  External Evaluation of the ZRB Phase 1 &nbsp;·&nbsp; Confidential Draft &nbsp;·&nbsp; 3 April 2026<br><br>
+  <span style="font-size:11px;opacity:.45">All documents, data, and information in this report are confidential and provided solely for the purpose of this evaluation.</span>
+</footer>
+
+<script>
+function toggleEQ(row){row.classList.toggle('open')}
+function filterEQ(crit,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.eq-row').forEach(row=>{
+    if(crit==='all') row.style.display='';
+    else if(crit==='primary') row.style.display=row.dataset.primary==='true'?'':'none';
+    else row.style.display=row.dataset.crit===crit?'':'none';
+  });
+}
+
+// Annex 1 accordion
+function toggleA2(id, tabIdx){
+  const card=document.getElementById(id);
+  if(!card) return;
+  card.classList.toggle('open');
+  // activate first tab when opening
+  if(card.classList.contains('open')){
+    const tabs=card.querySelectorAll('.a2-tab');
+    const panes=card.querySelectorAll('.a2-pane');
+    if(tabs.length){
+      tabs.forEach(t=>t.classList.remove('active'));
+      panes.forEach(p=>p.classList.remove('active'));
+      tabs[tabIdx||0].classList.add('active');
+      panes[tabIdx||0].classList.add('active');
+    }
+  }
+}
+function switchTab(tab, paneId){
+  const card=tab.closest('.a2-card');
+  card.querySelectorAll('.a2-tab').forEach(t=>t.classList.remove('active'));
+  card.querySelectorAll('.a2-pane').forEach(p=>p.classList.remove('active'));
+  tab.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+let a2AllOpen=false;
+function toggleAllA2(){
+  a2AllOpen=!a2AllOpen;
+  document.querySelectorAll('.a2-card').forEach(card=>{
+    if(a2AllOpen){
+      card.classList.add('open');
+      const tabs=card.querySelectorAll('.a2-tab');
+      const panes=card.querySelectorAll('.a2-pane');
+      if(tabs.length){
+        tabs.forEach(t=>t.classList.remove('active'));
+        panes.forEach(p=>p.classList.remove('active'));
+        tabs[0].classList.add('active');
+        panes[0].classList.add('active');
+      }
+    } else {
+      card.classList.remove('open');
+    }
+  });
+  document.getElementById('expandAllBtn').textContent=(a2AllOpen?'▲ Collapse all':'▼ Expand all');
+}
+// Active nav on scroll
+const secs=document.querySelectorAll('section[id]');
+const nls=document.querySelectorAll('.nav-links a');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) nls.forEach(a=>{
+      a.classList.remove('active');
+      if(a.getAttribute('href')==='#'+e.target.id) a.classList.add('active');
+    });
+  });
+},{rootMargin:'-25% 0px -70% 0px'}).observe||secs.forEach(s=>s&&new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)nls.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+e.target.id)a.classList.add('active')})})},{rootMargin:'-25% 0px -70% 0px'}).observe(s));
+(()=>{const o=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)nls.forEach(a=>{a.classList.remove('active');if(a.getAttribute('href')==='#'+e.target.id)a.classList.add('active')})})},{rootMargin:'-25% 0px -70% 0px'});secs.forEach(s=>o.observe(s))})();
+</script>
+</body>
+</html>
